@@ -4,7 +4,7 @@ using QuoteEditorBlazor.Models;
 
 namespace QuoteEditorBlazor.Data;
 
-class QuoteEditorContext : DbContext
+public class QuoteEditorContext : DbContext
 {
     public QuoteEditorContext(DbContextOptions<QuoteEditorContext> options) : base(options)
     {
