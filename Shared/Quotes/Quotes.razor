@@ -1,0 +1,9 @@
+@foreach (var quote in QuotesToShow)
+{
+    <QuoteEditorBlazor.Shared.Quotes.Quote QuoteToShow="quote" />
+}
+
+@code {
+    [Parameter]
+    public List<QuoteEditorBlazor.Models.Quote> QuotesToShow { get; set; }
+}
