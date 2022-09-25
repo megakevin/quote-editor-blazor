@@ -1,0 +1,15 @@
+@page "/quotes/new"
+
+<main class="container">
+    <a href="/">&larr; Back to quotes</a>
+
+    <div class="header">
+        <h1>New quote</h1>
+    </div>
+
+    <QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="quote" />
+</main>
+
+@code {
+    QuoteEditorBlazor.Models.Quote quote = new QuoteEditorBlazor.Models.Quote();
+}
