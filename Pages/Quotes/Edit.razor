@@ -1,0 +1,26 @@
+@page "/quotes/{quoteId:int}/edit"
+
+@using Microsoft.EntityFrameworkCore
+
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
+<main class="container">
+    <a href="/">&larr; Back to quotes</a>
+
+    <div class="header">
+        <h1>Edit quote</h1>
+    </div>
+
+    <QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="quote" />
+</main>
+
+@code {
+    [Parameter] public int QuoteId { get; set; }
+
+    QuoteEditorBlazor.Models.Quote quote = new QuoteEditorBlazor.Models.Quote();
+
+    protected override async Task OnInitializedAsync()
+    {
+        quote = await context.Quotes.FirstOrDefaultAsync(q => q.ID == QuoteId);
+    }
+}
