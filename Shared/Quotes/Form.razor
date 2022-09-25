@@ -1,0 +1,28 @@
+<EditForm Model="QuoteToEdit" class="quote form" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form__group">
+        <label class="visually-hidden" for="quote_name">
+            Name
+        </label>
+        <InputText id="quote_name" class="form__input" @bind-Value="QuoteToEdit.Name" />
+    </div>
+
+    <button class="btn" type="submit">Submit</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public QuoteEditorBlazor.Models.Quote QuoteToEdit { get; set; }
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("HandleValidSubmit called!");
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        Console.WriteLine("HandleInvalidSubmit called!");
+    }
+}
