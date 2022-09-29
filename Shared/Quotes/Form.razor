@@ -16,9 +16,13 @@
     [Parameter]
     public QuoteEditorBlazor.Models.Quote QuoteToEdit { get; set; }
 
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
     private void HandleValidSubmit()
     {
         Console.WriteLine("HandleValidSubmit called!");
+        OnSubmit.InvokeAsync();
     }
 
     private void HandleInvalidSubmit()
