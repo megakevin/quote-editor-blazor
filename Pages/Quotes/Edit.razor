@@ -2,6 +2,7 @@
 
 @using Microsoft.EntityFrameworkCore
 
+@inject NavigationManager NavigationManager
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 
 <main class="container">
@@ -11,7 +12,7 @@
         <h1>Edit quote</h1>
     </div>
 
-    <QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="quote" />
+    <QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="quote" OnSubmit="UpdateQuote" />
 </main>
 
 @code {
@@ -22,5 +23,12 @@
     protected override async Task OnInitializedAsync()
     {
         quote = await context.Quotes.FirstOrDefaultAsync(q => q.ID == QuoteId);
+    }
+
+    void UpdateQuote()
+    {
+        context.Entry(quote).State = EntityState.Modified;
+        context.SaveChanges();
+        NavigationManager.NavigateTo("/");
     }
 }
