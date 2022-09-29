@@ -1,5 +1,8 @@
 @page "/quotes/new"
 
+@inject NavigationManager NavigationManager
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
 <main class="container">
     <a href="/">&larr; Back to quotes</a>
 
@@ -7,9 +10,16 @@
         <h1>New quote</h1>
     </div>
 
-    <QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="quote" />
+    <QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="quote" OnSubmit="CreateQuote" />
 </main>
 
 @code {
     QuoteEditorBlazor.Models.Quote quote = new QuoteEditorBlazor.Models.Quote();
+
+    void CreateQuote()
+    {
+        context.Quotes.Add(quote);
+        context.SaveChanges();
+        NavigationManager.NavigateTo("/");
+    }
 }
