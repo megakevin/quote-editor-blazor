@@ -17,6 +17,11 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Watch Include="**\*.scss" />
+    <None Update="**\*.css" watch="false" />
+  </ItemGroup>
+
   <Target Name="BuildCssDev" Condition="'$(Configuration)' == 'Debug'" BeforeTargets="Build">
     <Exec Command="npm run sass" />
   </Target>
