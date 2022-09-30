@@ -1,0 +1,17 @@
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
+<QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="quote" OnSubmit="CreateQuote" />
+
+@code {
+    [Parameter]
+    public EventCallback OnQuoteCreated { get; set; }
+
+    QuoteEditorBlazor.Models.Quote quote = new QuoteEditorBlazor.Models.Quote();
+
+    void CreateQuote()
+    {
+        context.Quotes.Add(quote);
+        context.SaveChanges();
+        OnQuoteCreated.InvokeAsync();
+    }
+}

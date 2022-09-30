@@ -8,8 +8,13 @@
 <main class="container">
     <div class="header">
         <h1>Quotes</h1>
-        <a class="btn btn--primary" href="quotes/new">New quote</a>
+        <a class="btn btn--primary" @onclick="ShowNewQuoteForm">New quote</a>
     </div>
+
+    @if (shouldShowNewQuoteForm)
+    {
+        <QuoteEditorBlazor.Shared.Quotes.New OnQuoteCreated="OnQuoteCreated" />
+    }
 
     <QuoteEditorBlazor.Shared.Quotes.Quotes QuotesToShow="quotes" />
 </main>
@@ -17,8 +22,32 @@
 @code {
     List<QuoteEditorBlazor.Models.Quote> quotes = new List<QuoteEditorBlazor.Models.Quote>();
 
+    bool shouldShowNewQuoteForm = false;
+
     protected override async Task OnInitializedAsync()
     {
+        await LoadQuotes();
+    }
+
+    async Task LoadQuotes()
+    {
         quotes = await context.Quotes.ToListAsync();
+        StateHasChanged();
+    }
+
+    void ShowNewQuoteForm()
+    {
+        shouldShowNewQuoteForm = true;
+    }
+
+    void HideNewQuoteForm()
+    {
+        shouldShowNewQuoteForm = false;
+    }
+
+    async void OnQuoteCreated()
+    {
+        HideNewQuoteForm();
+        await LoadQuotes();
     }
 }
