@@ -21,7 +21,7 @@
       box-shadow: 0 0 0 2px var(--color-glint);
     }
 
-    &--invalid {
+    &.invalid {
       border-color: var(--color-primary);
     }
   }
