@@ -164,7 +164,8 @@ a:hover, a:focus, a:active {
   color: var(--color-white);
 }
 
-.error-message {
+.validation-message {
+  list-style: none;
   width: 100%;
   color: var(--color-primary);
   background-color: var(--color-primary-bg);
@@ -193,7 +194,7 @@ a:hover, a:focus, a:active {
 .form__input:focus {
   box-shadow: 0 0 0 2px var(--color-glint);
 }
-.form__input--invalid {
+.form__input.invalid {
   border-color: var(--color-primary);
 }
 
