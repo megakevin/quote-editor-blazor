@@ -1,9 +1,12 @@
 @foreach (var quote in QuotesToShow)
 {
-    <QuoteEditorBlazor.Shared.Quotes.Quote QuoteToShow="quote" />
+    <QuoteEditorBlazor.Shared.Quotes.Quote QuoteToShow="quote" OnQuoteDeleted="OnQuoteDeleted"/>
 }
 
 @code {
     [Parameter]
     public List<QuoteEditorBlazor.Models.Quote> QuotesToShow { get; set; }
+
+    [Parameter]
+    public EventCallback OnQuoteDeleted { get; set; }
 }
