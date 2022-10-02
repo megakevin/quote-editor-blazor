@@ -16,7 +16,10 @@
         <QuoteEditorBlazor.Shared.Quotes.New OnQuoteCreated="OnQuoteCreated" OnCancel="HideNewQuoteForm" />
     }
 
-    <QuoteEditorBlazor.Shared.Quotes.Quotes QuotesToShow="quotes" OnQuoteDeleted="LoadQuotes" />
+    @foreach (var quote in quotes)
+    {
+        <QuoteEditorBlazor.Shared.Quotes.Quote QuoteToShow="quote" OnQuoteDeleted="LoadQuotes" />
+    }
 </main>
 
 @code {
