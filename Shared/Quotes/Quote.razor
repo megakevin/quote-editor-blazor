@@ -1,12 +1,38 @@
-<div class="quote">
-  <a href="quotes/@QuoteToShow.ID">@QuoteToShow.Name</a>
-  <div class="quote__actions">
-    <a class="btn btn--light" href="quotes/@QuoteToShow.ID/delete">Delete</a>
-    <a class="btn btn--light" href="quotes/@QuoteToShow.ID/edit">Edit</a>
-  </div>
-</div>
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
+@if (isEditing)
+{
+    <QuoteEditorBlazor.Shared.Quotes.Edit QuoteToEdit="QuoteToShow" OnQuoteUpdated="OnQuoteUpdated" />
+}
+else
+{
+    <div class="quote">
+        <a href="quotes/@QuoteToShow.ID">@QuoteToShow.Name</a>
+        <div class="quote__actions">
+            <a class="btn btn--light" href="quotes/@QuoteToShow.ID/delete">Delete</a>
+            <a class="btn btn--light" @onclick="ShowEditForm">Edit</a>
+        </div>
+    </div>
+}
 
 @code {
     [Parameter]
     public QuoteEditorBlazor.Models.Quote QuoteToShow { get; set; }
+
+    bool isEditing = false;
+
+    void ShowEditForm()
+    {
+        isEditing = true;
+    }
+
+    void HideEditForm()
+    {
+        isEditing = false;
+    }
+
+    void OnQuoteUpdated()
+    {
+        HideEditForm();
+    }
 }

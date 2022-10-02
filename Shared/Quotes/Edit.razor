@@ -1,0 +1,20 @@
+@using Microsoft.EntityFrameworkCore
+
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
+<QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="QuoteToEdit" OnSubmit="UpdateQuote" />
+
+@code {
+    [Parameter]
+    public EventCallback OnQuoteUpdated { get; set; }
+
+    [Parameter]
+    public QuoteEditorBlazor.Models.Quote QuoteToEdit { get; set; }
+
+    void UpdateQuote()
+    {
+        context.Entry(QuoteToEdit).State = EntityState.Modified;
+        context.SaveChanges();
+        OnQuoteUpdated.InvokeAsync();
+    }
+}
