@@ -2,7 +2,7 @@
 
 @if (isEditing)
 {
-    <QuoteEditorBlazor.Shared.Quotes.Edit QuoteToEdit="QuoteToShow" OnQuoteUpdated="OnQuoteUpdated" />
+    <QuoteEditorBlazor.Shared.Quotes.Edit QuoteToEdit="QuoteToShow" OnQuoteUpdated="HideEditForm" OnCancel="HideEditForm" />
 }
 else
 {
@@ -32,11 +32,6 @@ else
     void HideEditForm()
     {
         isEditing = false;
-    }
-
-    void OnQuoteUpdated()
-    {
-        HideEditForm();
     }
 
     void DeleteQuote()

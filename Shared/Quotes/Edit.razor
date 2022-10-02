@@ -2,14 +2,17 @@
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 
-<QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="QuoteToEdit" OnSubmit="UpdateQuote" />
+<QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="QuoteToEdit" OnSubmit="UpdateQuote" OnCancel="OnCancel" />
 
 @code {
+    [Parameter]
+    public QuoteEditorBlazor.Models.Quote QuoteToEdit { get; set; }
+
     [Parameter]
     public EventCallback OnQuoteUpdated { get; set; }
 
     [Parameter]
-    public QuoteEditorBlazor.Models.Quote QuoteToEdit { get; set; }
+    public EventCallback OnCancel { get; set; }
 
     void UpdateQuote()
     {

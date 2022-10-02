@@ -9,6 +9,7 @@
         <InputText id="quote_name" class="form__input" @bind-Value="QuoteToEdit.Name" />
     </div>
 
+    <a class="btn btn--light" @onclick="OnCancel">Cancel</a>
     <button class="btn btn--secondary" type="submit">Submit</button>
 </EditForm>
 
@@ -18,6 +19,9 @@
 
     [Parameter]
     public EventCallback OnSubmit { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
 
     private void HandleValidSubmit()
     {

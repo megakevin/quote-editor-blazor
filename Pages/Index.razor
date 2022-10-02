@@ -1,4 +1,4 @@
-@page "/"
+﻿@page "/"
 @page "/quotes"
 
 @using Microsoft.EntityFrameworkCore
@@ -13,7 +13,7 @@
 
     @if (shouldShowNewQuoteForm)
     {
-        <QuoteEditorBlazor.Shared.Quotes.New OnQuoteCreated="OnQuoteCreated" />
+        <QuoteEditorBlazor.Shared.Quotes.New OnQuoteCreated="OnQuoteCreated" OnCancel="HideNewQuoteForm" />
     }
 
     <QuoteEditorBlazor.Shared.Quotes.Quotes QuotesToShow="quotes" OnQuoteDeleted="LoadQuotes" />
