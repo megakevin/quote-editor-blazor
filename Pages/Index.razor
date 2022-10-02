@@ -31,7 +31,7 @@
 
     async Task LoadQuotes()
     {
-        quotes = await context.Quotes.ToListAsync();
+        quotes = await context.Quotes.OrderBy(q => q.ID).ToListAsync();
         StateHasChanged();
     }
 
