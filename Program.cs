@@ -60,6 +60,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapBlazorHub();
+app.MapHub<QuotesHub>("/quoteshub");
 app.MapFallbackToPage("/_Host");
 
 app.Run();
