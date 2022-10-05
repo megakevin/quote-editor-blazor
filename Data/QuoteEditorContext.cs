@@ -12,4 +12,5 @@ public class QuoteEditorContext : DbContext
     }
 
     public DbSet<Quote> Quotes { get; set; }
+    public DbSet<Company> Companies { get; set; }
 }
