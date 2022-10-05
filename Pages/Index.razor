@@ -2,8 +2,12 @@
 @page "/quotes"
 
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.SignalR.Client
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
+@inject NavigationManager Navigation
+
+@implements IAsyncDisposable
 
 <main class="container">
     <div class="header">
@@ -18,11 +22,17 @@
 
     @foreach (var quote in quotes)
     {
-        <QuoteEditorBlazor.Shared.Quotes.Quote QuoteToShow="quote" OnQuoteDeleted="LoadQuotes" />
+        <QuoteEditorBlazor.Shared.Quotes.Quote
+            QuoteToShow="quote"
+            OnQuoteUpdated="NotifyQuotesChanged"
+            OnQuoteDeleted="NotifyQuotesChanged"
+        />
     }
 </main>
 
 @code {
+    private HubConnection? hubConnection;
+
     List<QuoteEditorBlazor.Models.Quote> quotes = new List<QuoteEditorBlazor.Models.Quote>();
 
     bool shouldShowNewQuoteForm = false;
@@ -30,6 +40,32 @@
     protected override async Task OnInitializedAsync()
     {
         await LoadQuotes();
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(Navigation.ToAbsoluteUri("/quoteshub"))
+            .Build();
+
+        hubConnection.On("QuotesChanged", async () => {
+            await LoadQuotes();
+        });
+
+        await hubConnection.StartAsync();
+    }
+
+    private async Task NotifyQuotesChanged()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("NotifyQuotesChanged");
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
     }
 
     async Task LoadQuotes()
@@ -51,6 +87,7 @@
     async void OnQuoteCreated()
     {
         HideNewQuoteForm();
-        await LoadQuotes();
+        await NotifyQuotesChanged();
+        //await LoadQuotes();
     }
 }

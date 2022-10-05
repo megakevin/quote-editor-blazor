@@ -2,7 +2,11 @@
 
 @if (isEditing)
 {
-    <QuoteEditorBlazor.Shared.Quotes.Edit QuoteToEdit="QuoteToShow" OnQuoteUpdated="HideEditForm" OnCancel="HideEditForm" />
+    <QuoteEditorBlazor.Shared.Quotes.Edit
+        QuoteToEdit="QuoteToShow"
+        OnQuoteUpdated="NotifyQuoteUpdated"
+        OnCancel="HideEditForm"
+    />
 }
 else
 {
@@ -20,6 +24,9 @@ else
     public QuoteEditorBlazor.Models.Quote QuoteToShow { get; set; }
 
     [Parameter]
+    public EventCallback OnQuoteUpdated { get; set; }
+
+    [Parameter]
     public EventCallback OnQuoteDeleted { get; set; }
 
     bool isEditing = false;
@@ -32,6 +39,12 @@ else
     void HideEditForm()
     {
         isEditing = false;
+    }
+
+    void NotifyQuoteUpdated()
+    {
+        HideEditForm();
+        OnQuoteUpdated.InvokeAsync();
     }
 
     void DeleteQuote()
