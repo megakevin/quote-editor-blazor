@@ -1,10 +1,11 @@
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using QuoteEditorBlazor.Models;
 
 namespace QuoteEditorBlazor.Data;
 
-public class QuoteEditorContext : DbContext
+public class QuoteEditorContext : IdentityUserContext<IdentityUser>
 {
     public QuoteEditorContext(DbContextOptions<QuoteEditorContext> options) : base(options)
     {
