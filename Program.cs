@@ -59,8 +59,10 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<QuoteEditorContext>();
+    var userManager = services.GetRequiredService<UserManager<QuoteEditorBlazor.Models.User>>();
+
     context.Database.EnsureCreated();
-    DbInitializer.Initialize(context);
+    await DbInitializer.Initialize(context, userManager);
 }
 
 app.UseHttpsRedirection();
