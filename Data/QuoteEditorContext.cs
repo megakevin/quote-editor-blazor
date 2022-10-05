@@ -5,7 +5,7 @@ using QuoteEditorBlazor.Models;
 
 namespace QuoteEditorBlazor.Data;
 
-public class QuoteEditorContext : IdentityUserContext<IdentityUser>
+public class QuoteEditorContext : IdentityUserContext<User>
 {
     public QuoteEditorContext(DbContextOptions<QuoteEditorContext> options) : base(options)
     {

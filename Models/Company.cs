@@ -9,4 +9,5 @@ public class Company
     public string Name { get; set; }
 
     public ICollection<Quote> Quotes { get; set; }
+    public ICollection<User> Users { get; set; }
 }
