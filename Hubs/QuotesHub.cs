@@ -6,7 +6,7 @@ namespace BlazorServerSignalRApp.Server.Hubs
     {
         public async Task NotifyQuotesChanged()
         {
-            await Clients.All.SendAsync("QuotesChanged");
+            await Clients.Others.SendAsync("QuotesChanged");
         }
     }
 }
