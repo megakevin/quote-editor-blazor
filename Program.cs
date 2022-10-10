@@ -12,12 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddDbContext<QuoteEditorContext>(options =>
+builder.Services.AddDbContext<QuoteEditorContext>(options => {
     options
         .UseNpgsql(builder.Configuration.GetConnectionString("QuoteEditorContext"))
         .UseSnakeCaseNamingConvention()
         .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
-        .EnableSensitiveDataLogging()
+        .EnableSensitiveDataLogging();
+    },
+    ServiceLifetime.Transient
 );
 
 builder.Services.AddDefaultIdentity<QuoteEditorBlazor.Models.User>(options => {
