@@ -1,21 +1,44 @@
-<header class="navbar">
-  @* <% if user_signed_in? %> *@
-    <div class="navbar__brand">
-      Company name
-    </div>
-    <div class="navbar__name">
-      Current user name
-    </div>
-    @* <%= button_to "Sign out",
-                  destroy_user_session_path,
-                  method: :delete,
-                  class: "btn btn--dark" %> *@
-    <a class="btn btn--dark" href="/">Sign out</a>
-  @* <% else %> *@
-    @* <%= link_to "Sign in",
-                new_user_session_path,
-                class: "btn btn--dark navbar__right" %> *@
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
 
-    <a class="btn btn--dark navbar__right" href="/login">Sign in</a>
-  @* <% end %> *@
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
+<header class="navbar">
+  <AuthorizeView>
+    <Authorized>
+      <div class="navbar__brand">
+        @currentCompanyName
+      </div>
+      <div class="navbar__name">
+        @context.User.Identity.Name
+      </div>
+
+      <a class="btn btn--dark" href="/logout">Sign out</a>
+    </Authorized>
+    <NotAuthorized>
+      <a class="btn btn--dark navbar__right" href="/login">Sign in</a>
+    </NotAuthorized>
+  </AuthorizeView>
 </header>
+
+@code {
+    [CascadingParameter]
+    Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    string currentCompanyName;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationStateTask;
+
+        if (authState.User.Identity.IsAuthenticated)
+        {
+            var currentUserId = authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            var user = await context.Users.Include(u => u.Company).FirstAsync(u => u.Id == currentUserId);
+
+            currentCompanyName = user.Company.Name;
+        }
+    }
+}
+
