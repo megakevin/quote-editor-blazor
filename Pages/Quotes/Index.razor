@@ -1,5 +1,7 @@
 ﻿@page "/quotes"
 
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.SignalR.Client
 
@@ -30,6 +32,9 @@
 </main>
 
 @code {
+    [CascadingParameter]
+    Task<AuthenticationState> authenticationStateTask { get; set; }
+
     private HubConnection? hubConnection;
 
     List<QuoteEditorBlazor.Models.Quote> quotes = new List<QuoteEditorBlazor.Models.Quote>();
@@ -69,8 +74,16 @@
 
     async Task LoadQuotes()
     {
-        quotes = await context.Quotes.OrderBy(q => q.ID).ToListAsync();
-        StateHasChanged();
+        var authState = await authenticationStateTask;
+
+        if (authState.User.Identity.IsAuthenticated)
+        {
+            var currentUserId = authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            var user = await context.Users.Include(u => u.Company).FirstAsync(u => u.Id == currentUserId);
+
+            quotes = await context.Quotes.Where(q => q.CompanyID == user.CompanyID).OrderBy(q => q.ID).ToListAsync();
+            StateHasChanged();
+        }
     }
 
     void ShowNewQuoteForm()
