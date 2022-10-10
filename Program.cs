@@ -20,7 +20,7 @@ builder.Services.AddDbContext<QuoteEditorContext>(options =>
         .EnableSensitiveDataLogging()
 );
 
-builder.Services.AddIdentityCore<QuoteEditorBlazor.Models.User>(options => {
+builder.Services.AddDefaultIdentity<QuoteEditorBlazor.Models.User>(options => {
     options.SignIn.RequireConfirmedAccount = false;
     options.User.RequireUniqueEmail = true;
     options.Password.RequireDigit = false;
