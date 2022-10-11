@@ -79,7 +79,7 @@
 
         if (authState.User.Identity.IsAuthenticated)
         {
-            var currentCompanyId = authState.User.Claims.First(c => c.Type == Claims.CompanyID).Value;
+            var currentCompanyId = authState.User.GetCompanyID();
             quotes = await context.Quotes
                 .Where(q => q.CompanyID == int.Parse(currentCompanyId))
                 .OrderBy(q => q.ID)

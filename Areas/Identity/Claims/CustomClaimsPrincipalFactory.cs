@@ -28,3 +28,11 @@ public class CustomClaimsPrincipalFactory : UserClaimsPrincipalFactory<User>
         return principal;
     }
 }
+
+public static class CustomClaimsPrincipalFactoryExtensions
+{
+    public static string GetCompanyID(this ClaimsPrincipal principal)
+    {
+        return principal.Claims.First(c => c.Type == Claims.CompanyID).Value;
+    }
+}
