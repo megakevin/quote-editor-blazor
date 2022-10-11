@@ -34,10 +34,10 @@
 
         if (authState.User.Identity.IsAuthenticated)
         {
-            var currentUserId = authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var user = await context.Users.Include(u => u.Company).FirstAsync(u => u.Id == currentUserId);
+            var currentCompanyId = authState.User.Claims.First(c => c.Type == "CompanyID").Value;
+            var company = await context.Companies.FindAsync(int.Parse(currentCompanyId));
 
-            currentCompanyName = user.Company.Name;
+            currentCompanyName = company.Name;
         }
     }
 }
