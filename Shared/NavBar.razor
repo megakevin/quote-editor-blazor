@@ -1,6 +1,7 @@
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.EntityFrameworkCore
+@using QuoteEditorBlazor.Areas.Identity.Claims
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 
@@ -34,7 +35,7 @@
 
         if (authState.User.Identity.IsAuthenticated)
         {
-            var currentCompanyId = authState.User.Claims.First(c => c.Type == "CompanyID").Value;
+            var currentCompanyId = authState.User.Claims.First(c => c.Type == Claims.CompanyID).Value;
             var company = await context.Companies.FindAsync(int.Parse(currentCompanyId));
 
             currentCompanyName = company.Name;

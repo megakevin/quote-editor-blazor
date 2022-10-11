@@ -21,7 +21,7 @@ public class CustomClaimsPrincipalFactory : UserClaimsPrincipalFactory<User>
         if (principal.Identity != null)
         {
             ((ClaimsIdentity)principal.Identity).AddClaims(
-                new[] { new Claim("CompanyID", user.CompanyID.ToString()) }
+                new[] { new Claim(Claims.CompanyID, user.CompanyID.ToString()) }
             );
         }
 

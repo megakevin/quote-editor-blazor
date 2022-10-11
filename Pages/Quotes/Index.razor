@@ -1,10 +1,10 @@
-@page "/quotes"
+﻿@page "/quotes"
 @attribute [Authorize]
 
-@using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.SignalR.Client
+@using QuoteEditorBlazor.Areas.Identity.Claims
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 @inject NavigationManager Navigation
@@ -79,7 +79,7 @@
 
         if (authState.User.Identity.IsAuthenticated)
         {
-            var currentCompanyId = authState.User.Claims.First(c => c.Type == "CompanyID").Value;
+            var currentCompanyId = authState.User.Claims.First(c => c.Type == Claims.CompanyID).Value;
             quotes = await context.Quotes
                 .Where(q => q.CompanyID == int.Parse(currentCompanyId))
                 .OrderBy(q => q.ID)
