@@ -1,8 +1,13 @@
+@using QuoteEditorBlazor.Areas.Identity.Claims
+
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 
 <QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="quote" OnSubmit="CreateQuote" OnCancel="OnCancel" />
 
 @code {
+    [CascadingParameter]
+    Task<AuthenticationState> authenticationStateTask { get; set; }
+
     [Parameter]
     public EventCallback OnQuoteCreated { get; set; }
 
@@ -11,8 +16,15 @@
 
     QuoteEditorBlazor.Models.Quote quote = new QuoteEditorBlazor.Models.Quote();
 
-    void CreateQuote()
+    async Task CreateQuote()
     {
+        var authState = await authenticationStateTask;
+        if (!authState.User.Identity.IsAuthenticated) return;
+
+        var currentCompanyId = authState.User.GetCompanyID();
+
+        quote.CompanyID = int.Parse(currentCompanyId);
+
         context.Quotes.Add(quote);
         context.SaveChanges();
         OnQuoteCreated.InvokeAsync();
