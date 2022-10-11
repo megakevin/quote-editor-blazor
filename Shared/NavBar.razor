@@ -32,14 +32,12 @@
     protected override async Task OnInitializedAsync()
     {
         var authState = await authenticationStateTask;
+        if (!authState.User.Identity.IsAuthenticated) return;
 
-        if (authState.User.Identity.IsAuthenticated)
-        {
-            var currentCompanyId = authState.User.GetCompanyID();
-            var company = await context.Companies.FindAsync(int.Parse(currentCompanyId));
+        var currentCompanyId = authState.User.GetCompanyID();
+        var company = await context.Companies.FindAsync(int.Parse(currentCompanyId));
 
-            currentCompanyName = company.Name;
-        }
+        currentCompanyName = company.Name;
     }
 }
 

@@ -76,17 +76,15 @@
     async Task LoadQuotes()
     {
         var authState = await authenticationStateTask;
+        if (!authState.User.Identity.IsAuthenticated) return;
 
-        if (authState.User.Identity.IsAuthenticated)
-        {
-            var currentCompanyId = authState.User.GetCompanyID();
-            quotes = await context.Quotes
-                .Where(q => q.CompanyID == int.Parse(currentCompanyId))
-                .OrderBy(q => q.ID)
-                .ToListAsync();
+        var currentCompanyId = authState.User.GetCompanyID();
+        quotes = await context.Quotes
+            .Where(q => q.CompanyID == int.Parse(currentCompanyId))
+            .OrderBy(q => q.ID)
+            .ToListAsync();
 
-            StateHasChanged();
-        }
+        StateHasChanged();
     }
 
     void ShowNewQuoteForm()
