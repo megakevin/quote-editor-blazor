@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.ResponseCompression;
 using BlazorServerSignalRApp.Server.Hubs;
 using QuoteEditorBlazor.Data;
 using Microsoft.AspNetCore.Identity;
+using QuoteEditorBlazor.Areas.Identity.Claims;
+using QuoteEditorBlazor.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +24,7 @@ builder.Services.AddDbContext<QuoteEditorContext>(options => {
     ServiceLifetime.Transient
 );
 
-builder.Services.AddDefaultIdentity<QuoteEditorBlazor.Models.User>(options => {
+builder.Services.AddDefaultIdentity<User>(options => {
     options.SignIn.RequireConfirmedAccount = false;
     options.User.RequireUniqueEmail = true;
     options.Password.RequireDigit = false;
@@ -31,6 +33,8 @@ builder.Services.AddDefaultIdentity<QuoteEditorBlazor.Models.User>(options => {
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
 }).AddEntityFrameworkStores<QuoteEditorContext>();
+
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomClaimsPrincipalFactory>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -62,7 +66,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<QuoteEditorContext>();
-    var userManager = services.GetRequiredService<UserManager<QuoteEditorBlazor.Models.User>>();
+    var userManager = services.GetRequiredService<UserManager<User>>();
 
     context.Database.EnsureCreated();
     await DbInitializer.Initialize(context, userManager);
