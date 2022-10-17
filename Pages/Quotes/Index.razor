@@ -1,4 +1,4 @@
-﻿@page "/quotes"
+@page "/quotes"
 @attribute [Authorize]
 
 @using Microsoft.AspNetCore.Components.Authorization
@@ -27,7 +27,7 @@
         <QuoteEditorBlazor.Shared.Quotes.Quote
             QuoteToShow="quote"
             OnQuoteUpdated="NotifyQuotesChanged"
-            OnQuoteDeleted="NotifyQuotesChanged"
+            OnQuoteDeleted="OnQuoteDeleted"
         />
     }
 </main>
@@ -100,6 +100,12 @@
     async void OnQuoteCreated()
     {
         HideNewQuoteForm();
+        await NotifyQuotesChanged();
+        await LoadQuotes();
+    }
+
+    async void OnQuoteDeleted()
+    {
         await NotifyQuotesChanged();
         await LoadQuotes();
     }
