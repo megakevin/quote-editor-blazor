@@ -24,6 +24,8 @@ builder.Services.AddDbContext<QuoteEditorContext>(options => {
     ServiceLifetime.Transient
 );
 
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 builder.Services.AddDefaultIdentity<User>(options => {
     options.SignIn.RequireConfirmedAccount = false;
     options.User.RequireUniqueEmail = true;
@@ -35,10 +37,6 @@ builder.Services.AddDefaultIdentity<User>(options => {
 }).AddEntityFrameworkStores<QuoteEditorContext>();
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomClaimsPrincipalFactory>();
-
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddResponseCompression(opts =>
 {
