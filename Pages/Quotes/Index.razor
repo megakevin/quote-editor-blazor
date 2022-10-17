@@ -8,6 +8,7 @@
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 @inject NavigationManager Navigation
+@inject IHttpContextAccessor HttpContextAccessor
 
 @implements IAsyncDisposable
 
@@ -47,7 +48,17 @@
         await LoadQuotes();
 
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(Navigation.ToAbsoluteUri("/quoteshub"))
+            .WithUrl(Navigation.ToAbsoluteUri("/quoteshub"), options => {
+                foreach (var cookie in HttpContextAccessor.HttpContext.Request.Cookies)
+                {
+                    options.Cookies.Add(new System.Net.Cookie(
+                        cookie.Key,
+                        cookie.Value,
+                        "/",
+                        HttpContextAccessor.HttpContext.Request.Host.Host
+                    ));
+                }
+            })
             .Build();
 
         hubConnection.On("QuotesChanged", async () => {
