@@ -1,0 +1,26 @@
+@using QuoteEditorBlazor.State
+
+@inject FlashState flashState
+
+@implements IDisposable
+
+<div class="flash">
+    @foreach (var message in flashState.Messages)
+    {
+        <div class="flash__message">
+            @message
+        </div>
+    }
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        flashState.MessageAdded += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        flashState.MessageAdded -= StateHasChanged;
+    }
+}
