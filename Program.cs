@@ -7,6 +7,7 @@ using QuoteEditorBlazor.Data;
 using Microsoft.AspNetCore.Identity;
 using QuoteEditorBlazor.Areas.Identity.Claims;
 using QuoteEditorBlazor.Models;
+using QuoteEditorBlazor.State;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,7 @@ builder.Services.AddResponseCompression(opts =>
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<QuotesHubConnectionBuilder>();
+builder.Services.AddScoped<FlashState>();
 
 var app = builder.Build();
 
