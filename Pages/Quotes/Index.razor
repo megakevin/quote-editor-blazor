@@ -1,14 +1,14 @@
-@page "/quotes"
+﻿@page "/quotes"
 @attribute [Authorize]
 
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.SignalR.Client
 @using QuoteEditorBlazor.Areas.Identity.Claims
+@using QuoteEditorBlazor.Hubs
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
-@inject NavigationManager Navigation
-@inject IHttpContextAccessor HttpContextAccessor
+@inject QuotesHubConnectionBuilder quotesHubConnectionBuilder
 
 @implements IAsyncDisposable
 
@@ -47,19 +47,7 @@
     {
         await LoadQuotes();
 
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(Navigation.ToAbsoluteUri("/quoteshub"), options => {
-                foreach (var cookie in HttpContextAccessor.HttpContext.Request.Cookies)
-                {
-                    options.Cookies.Add(new System.Net.Cookie(
-                        cookie.Key,
-                        cookie.Value,
-                        "/",
-                        HttpContextAccessor.HttpContext.Request.Host.Host
-                    ));
-                }
-            })
-            .Build();
+        hubConnection = quotesHubConnectionBuilder.Build();
 
         hubConnection.On("QuotesChanged", async () => {
             await LoadQuotes();

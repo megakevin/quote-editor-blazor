@@ -45,6 +45,8 @@ builder.Services.AddResponseCompression(opts =>
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddScoped<QuotesHubConnectionBuilder>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
