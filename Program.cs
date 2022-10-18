@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.ResponseCompression;
-using BlazorServerSignalRApp.Server.Hubs;
+using QuoteEditorBlazor.Hubs;
 using QuoteEditorBlazor.Data;
 using Microsoft.AspNetCore.Identity;
 using QuoteEditorBlazor.Areas.Identity.Claims;

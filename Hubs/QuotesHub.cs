@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using QuoteEditorBlazor.Areas.Identity.Claims;
 
-namespace BlazorServerSignalRApp.Server.Hubs
+namespace QuoteEditorBlazor.Hubs
 {
     public class QuotesHub : Hub
     {
