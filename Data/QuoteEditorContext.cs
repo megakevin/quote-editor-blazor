@@ -14,4 +14,5 @@ public class QuoteEditorContext : IdentityUserContext<User>
 
     public DbSet<Quote> Quotes { get; set; }
     public DbSet<Company> Companies { get; set; }
+    public DbSet<LineItemDate> LineItemDates { get; set; }
 }
