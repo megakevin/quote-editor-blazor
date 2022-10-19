@@ -6,9 +6,14 @@ public class FlashState
 
     public event Action? MessageAdded;
 
-    public void AddMessage(string message)
+    public async void AddMessage(string message)
     {
         Messages.Add(message);
+        MessageAdded?.Invoke();
+
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
+        Messages.Remove(message);
         MessageAdded?.Invoke();
     }
 }
