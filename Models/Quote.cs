@@ -11,4 +11,6 @@ public class Quote
     public int CompanyID { get; set; }
 
     public Company Company { get; set; }
+
+    public ICollection<LineItemDate> LineItemDates { get; set; }
 }
