@@ -1,4 +1,4 @@
-﻿@page "/quotes"
+@page "/quotes"
 @attribute [Authorize]
 
 @using Microsoft.AspNetCore.Components.Authorization
@@ -23,6 +23,16 @@
     @if (shouldShowNewQuoteForm)
     {
         <QuoteEditorBlazor.Shared.Quotes.New OnQuoteCreated="OnQuoteCreated" OnCancel="HideNewQuoteForm" />
+    }
+    else if (!quotes.Any())
+    {
+        <div class="empty-state">
+            <p class="empty-state__text">
+                You don't have any quotes yet!
+            </p>
+
+            <a class="btn btn--primary" @onclick="ShowNewQuoteForm">Add quote</a>
+        </div>
     }
 
     @foreach (var quote in quotes)

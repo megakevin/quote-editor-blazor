@@ -286,6 +286,19 @@ a:hover, a:focus, a:active {
   border-radius: 999px;
 }
 
+.empty-state {
+  padding: var(--space-m);
+  border: var(--border);
+  border-style: dashed;
+  text-align: center;
+}
+.empty-state__text {
+  font-size: var(--font-size-l);
+  color: var(--color-text-header);
+  margin-bottom: var(--space-l);
+  font-weight: bold;
+}
+
 .container {
   width: 100%;
   padding-right: var(--space-xs);
