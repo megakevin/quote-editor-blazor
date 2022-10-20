@@ -22,8 +22,14 @@ public static class DbInitializer
             new Quote { Name = "Second quote", Company = companies[0] },
             new Quote { Name = "Third quote", Company = companies[0] }
         };
-
         context.Quotes.AddRange(quotes);
+
+        var lineItemDates = new LineItemDate[]
+        {
+            new LineItemDate { Quote = quotes[0], Date = DateOnly.FromDateTime(DateTime.Today) },
+            new LineItemDate { Quote = quotes[0], Date = DateOnly.FromDateTime(DateTime.Today).AddDays(7) }
+        };
+        context.LineItemDates.AddRange(lineItemDates);
 
         context.SaveChanges();
 
