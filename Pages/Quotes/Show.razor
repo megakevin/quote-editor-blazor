@@ -90,6 +90,7 @@
         quote = await context.Quotes.FirstAsync(q => q.ID == QuoteId);
 
         lineItemDates = await context.LineItemDates
+            .Include(lid => lid.LineItems.OrderBy(li => li.ID))
             .Where(lid => lid.QuoteID == QuoteId)
             .OrderBy(lid => lid.Date)
             .ToListAsync();
