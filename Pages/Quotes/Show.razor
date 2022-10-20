@@ -5,21 +5,44 @@
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 
 <main class="container">
-    <a href="/">&larr; Back to quotes</a>
+    <a href="/quotes">&larr; Back to quotes</a>
     <div class="header">
         <h1>
             @quote.Name
         </h1>
+
+        @* <%= link_to "New date", new_quote_line_item_date_path(@quote), class: "btn btn--primary" %> *@
+        <a class="btn btn--primary" href="/quotes/@QuoteId/line_item_dates/new" @onclick="ShowNewLineItemDateForm">New date</a>
     </div>
+
+    @* <%= render @line_item_dates, quote: @quote %> *@
+
+    @if (quote.LineItemDates != null)
+    {
+        @foreach (var lineItemDate in quote.LineItemDates)
+        {
+            <QuoteEditorBlazor.Shared.LineItemDates.LineItemDate
+                LineItemDateToShow="lineItemDate"
+            />
+        }
+    }
 </main>
 
 @code {
-    [Parameter] public int QuoteId { get; set; }
+    [Parameter]
+    public int QuoteId { get; set; }
 
     QuoteEditorBlazor.Models.Quote quote = new QuoteEditorBlazor.Models.Quote();
 
     protected override async Task OnInitializedAsync()
     {
-        quote = await context.Quotes.FirstOrDefaultAsync(q => q.ID == QuoteId);
+        quote = await context.Quotes
+            .Include(q => q.LineItemDates)
+            .FirstAsync(q => q.ID == QuoteId);
+    }
+
+    void ShowNewLineItemDateForm()
+    {
+        Console.WriteLine("called ShowNewLineItemDateForm");
     }
 }

@@ -1,0 +1,45 @@
+<div class="line-item-date">
+    <div class="line-item-date__header">
+        <h2 class="line-item-date__title">
+            @* <%= l(line_item_date.date, format: :long) %> *@
+            @LineItemDateToShow.Date
+        </h2>
+
+        <div class="line-item-date__actions">
+            @* <%= button_to "Delete",
+                        [quote, line_item_date],
+                        method: :delete,
+                        class: "btn btn--light" %>
+            <%= link_to "Edit",
+                        [:edit, quote, line_item_date],
+                        class: "btn btn--light" %> *@
+            <a class="btn btn--light" @onclick="DeleteLineItemDate" href="/quotes/@LineItemDateToShow.QuoteID/line_item_dates/@LineItemDateToShow.ID/delete">Delete</a>
+            <a class="btn btn--light" @onclick="ShowEditForm" href="/quotes/@LineItemDateToShow.QuoteID/line_item_dates/@LineItemDateToShow.ID/edit">Edit</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public QuoteEditorBlazor.Models.LineItemDate LineItemDateToShow { get; set; }
+
+    void ShowEditForm()
+    {
+        //isEditing = true;
+        Console.WriteLine("called ShowEditForm");
+    }
+
+    void HideEditForm()
+    {
+        //isEditing = false;
+        Console.WriteLine("called HideEditForm");
+    }
+
+    void DeleteLineItemDate()
+    {
+        Console.WriteLine("called DeleteLineItemDate");
+        /*context.Quotes.Remove(QuoteToShow);
+        context.SaveChanges();
+        OnQuoteDeleted.InvokeAsync();*/
+    }
+}
