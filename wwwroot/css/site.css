@@ -172,6 +172,10 @@ a:hover, a:focus, a:active {
   color: var(--color-white);
 }
 
+.validation-errors {
+  width: 100%;
+}
+
 .validation-message {
   list-style: none;
   width: 100%;
