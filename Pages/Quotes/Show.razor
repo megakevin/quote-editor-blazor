@@ -49,7 +49,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadQuote();
+        await LoadData();
     }
 
     void ShowForm()
@@ -68,24 +68,24 @@
 
         HideForm();
         //await NotifyQuotesChanged(); TODO: SignalR
-        await LoadQuote();
+        await LoadData();
     }
 
     async void OnLineItemDateUpdated()
     {
         flashState.AddMessage("Date was successfully updated.");
         // await NotifyQuotesChanged(); TODO: SignalR
-        await LoadQuote();
+        await LoadData();
     }
 
     async void OnLineItemDateDeleted()
     {
         flashState.AddMessage("Date was successfully destroyed.");
         // await NotifyQuotesChanged(); TODO: SignalR
-        await LoadQuote();
+        await LoadData();
     }
 
-    async Task LoadQuote()
+    async Task LoadData()
     {
         quote = await context.Quotes.FirstAsync(q => q.ID == QuoteId);
 
