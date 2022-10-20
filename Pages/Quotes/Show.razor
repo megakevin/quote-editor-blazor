@@ -23,12 +23,13 @@
         />
     }
 
-    @if (quote.LineItemDates != null)
+    @if (lineItemDates != null)
     {
-        @foreach (var lineItemDate in quote.LineItemDates)
+        @foreach (var lineItemDate in lineItemDates)
         {
             <QuoteEditorBlazor.Shared.LineItemDates.LineItemDate
                 LineItemDateToShow="lineItemDate"
+                OnLineItemDateUpdated="OnLineItemDateUpdated"
             />
         }
     }
@@ -39,6 +40,7 @@
     public int QuoteId { get; set; }
 
     QuoteEditorBlazor.Models.Quote quote = new QuoteEditorBlazor.Models.Quote();
+    List<QuoteEditorBlazor.Models.LineItemDate> lineItemDates = new List<QuoteEditorBlazor.Models.LineItemDate>();
 
     bool shouldShowForm = false;
 
@@ -66,11 +68,21 @@
         await LoadQuote();
     }
 
+    async void OnLineItemDateUpdated()
+    {
+        // flashState.AddMessage("Quote was successfully updated."); TODO: Flash notices
+        // await NotifyQuotesChanged(); TODO: SignalR
+        await LoadQuote();
+    }
+
     async Task LoadQuote()
     {
-        quote = await context.Quotes
-            .Include(q => q.LineItemDates.OrderBy(lid => lid.Date))
-            .FirstAsync(q => q.ID == QuoteId);
+        quote = await context.Quotes.FirstAsync(q => q.ID == QuoteId);
+
+        lineItemDates = await context.LineItemDates
+            .Where(lid => lid.QuoteID == QuoteId)
+            .OrderBy(lid => lid.Date)
+            .ToListAsync();
 
         StateHasChanged();
     }
