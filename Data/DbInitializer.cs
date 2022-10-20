@@ -30,6 +30,43 @@ public static class DbInitializer
         };
         context.LineItemDates.AddRange(lineItemDates);
 
+        var lineItems = new LineItem[]
+        {
+            new LineItem
+            {
+                LineItemDate = lineItemDates[0],
+                Name = "Meeting room",
+                Description = "A cosy meeting room for 10 people",
+                Quantity = 1,
+                UnitPrice = 1000
+            },
+            new LineItem
+            {
+                LineItemDate = lineItemDates[0],
+                Name = "Meal tray",
+                Description = "Our delicious meal tray",
+                Quantity = 10,
+                UnitPrice = 25
+            },
+            new LineItem
+            {
+                LineItemDate = lineItemDates[1],
+                Name = "Meeting room",
+                Description = "A cosy meeting room for 10 people",
+                Quantity = 1,
+                UnitPrice = 1000
+            },
+            new LineItem
+            {
+                LineItemDate = lineItemDates[1],
+                Name = "Meal tray",
+                Description = "Our delicious meal tray",
+                Quantity = 10,
+                UnitPrice = 25
+            },
+        };
+        context.LineItems.AddRange(lineItems);
+
         context.SaveChanges();
 
         await userManager.CreateAsync(
