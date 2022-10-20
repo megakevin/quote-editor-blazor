@@ -1,3 +1,5 @@
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
 @if (isEditing)
 {
     <QuoteEditorBlazor.Shared.LineItemDates.Edit
@@ -15,7 +17,7 @@ else
             </h2>
 
             <div class="line-item-date__actions">
-                <a class="btn btn--light" @onclick="DeleteLineItemDate" href="/quotes/@LineItemDateToShow.QuoteID/line_item_dates/@LineItemDateToShow.ID/delete">Delete</a>
+                <a class="btn btn--light" @onclick="DeleteLineItemDate">Delete</a>
                 <a class="btn btn--light" @onclick="ShowEditForm">Edit</a>
             </div>
         </div>
@@ -52,9 +54,8 @@ else
 
     void DeleteLineItemDate()
     {
-        Console.WriteLine("called DeleteLineItemDate");
-        /*context.Quotes.Remove(QuoteToShow);
+        context.LineItemDates.Remove(LineItemDateToShow);
         context.SaveChanges();
-        OnQuoteDeleted.InvokeAsync();*/
+        OnLineItemDateDeleted.InvokeAsync();
     }
 }

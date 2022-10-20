@@ -30,6 +30,7 @@
             <QuoteEditorBlazor.Shared.LineItemDates.LineItemDate
                 LineItemDateToShow="lineItemDate"
                 OnLineItemDateUpdated="OnLineItemDateUpdated"
+                OnLineItemDateDeleted="OnLineItemDateDeleted"
             />
         }
     }
@@ -71,6 +72,13 @@
     async void OnLineItemDateUpdated()
     {
         // flashState.AddMessage("Quote was successfully updated."); TODO: Flash notices
+        // await NotifyQuotesChanged(); TODO: SignalR
+        await LoadQuote();
+    }
+
+    async void OnLineItemDateDeleted()
+    {
+        // flashState.AddMessage("Quote was successfully destroyed."); TODO: Flash notices
         // await NotifyQuotesChanged(); TODO: SignalR
         await LoadQuote();
     }
