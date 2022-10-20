@@ -11,11 +11,17 @@
             @quote.Name
         </h1>
 
-        @* <%= link_to "New date", new_quote_line_item_date_path(@quote), class: "btn btn--primary" %> *@
-        <a class="btn btn--primary" href="/quotes/@QuoteId/line_item_dates/new" @onclick="ShowNewLineItemDateForm">New date</a>
+        <a class="btn btn--primary" @onclick="ShowForm">New date</a>
     </div>
 
-    @* <%= render @line_item_dates, quote: @quote %> *@
+    @if (shouldShowForm)
+    {
+        <QuoteEditorBlazor.Shared.LineItemDates.New
+            QuoteToEdit="quote"
+            OnLineItemDateCreated="OnLineItemDateCreated"
+            OnCancel="HideForm"
+        />
+    }
 
     @if (quote.LineItemDates != null)
     {
@@ -34,15 +40,38 @@
 
     QuoteEditorBlazor.Models.Quote quote = new QuoteEditorBlazor.Models.Quote();
 
+    bool shouldShowForm = false;
+
     protected override async Task OnInitializedAsync()
     {
-        quote = await context.Quotes
-            .Include(q => q.LineItemDates)
-            .FirstAsync(q => q.ID == QuoteId);
+        await LoadQuote();
     }
 
-    void ShowNewLineItemDateForm()
+    void ShowForm()
     {
-        Console.WriteLine("called ShowNewLineItemDateForm");
+        shouldShowForm = true;
+    }
+
+    void HideForm()
+    {
+        shouldShowForm = false;
+    }
+
+    async void OnLineItemDateCreated()
+    {
+        //flashState.AddMessage("Quote was successfully created."); TODO: Flash notices
+
+        HideForm();
+        //await NotifyQuotesChanged(); TODO: SignalR
+        await LoadQuote();
+    }
+
+    async Task LoadQuote()
+    {
+        quote = await context.Quotes
+            .Include(q => q.LineItemDates.OrderBy(lid => lid.Date))
+            .FirstAsync(q => q.ID == QuoteId);
+
+        StateHasChanged();
     }
 }

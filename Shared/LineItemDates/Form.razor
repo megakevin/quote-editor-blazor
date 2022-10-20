@@ -1,0 +1,25 @@
+<EditForm Model="LineItemDateToEdit" class="form line-item-date" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form__group">
+        <label class="visually-hidden" for="line_item_date_date">
+            Date
+        </label>
+        <InputDate id="line_item_date_date" class="form__input" @bind-Value="LineItemDateToEdit.Date" />
+    </div>
+
+    <a class="btn btn--light" @onclick="OnCancel">Cancel</a>
+    <button class="btn btn--secondary" type="submit">Submit</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public QuoteEditorBlazor.Models.LineItemDate LineItemDateToEdit { get; set; }
+
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+}
