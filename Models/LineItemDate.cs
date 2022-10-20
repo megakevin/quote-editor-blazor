@@ -14,4 +14,5 @@ public class LineItemDate
     public int QuoteID { get; set; }
 
     public Quote Quote { get; set; }
+    public ICollection<LineItem> LineItems { get; set; }
 }
