@@ -299,6 +299,29 @@ a:hover, a:focus, a:active {
   font-weight: bold;
 }
 
+.line-item-date {
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xxs);
+}
+.line-item-date__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+.line-item-date__title {
+  font-size: var(--font-size-xl);
+}
+@media (min-width: 50rem) {
+  .line-item-date__title {
+    font-size: var(--font-size-xxl);
+  }
+}
+.line-item-date__actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
 .container {
   width: 100%;
   padding-right: var(--space-xs);
