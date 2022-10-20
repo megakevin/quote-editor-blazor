@@ -13,7 +13,6 @@ public static class DbInitializer
             new Company { Name = "KPMG" },
             new Company { Name = "PwC" }
         };
-
         context.Companies.AddRange(companies);
 
         var quotes = new Quote[]
@@ -37,7 +36,7 @@ public static class DbInitializer
             new User() {
                 UserName = "accountant@kpmg.com",
                 Email = "accountant@kpmg.com",
-                Company = companies[0]
+                CompanyID = companies[0].ID
             },
             "password"
         );
@@ -46,7 +45,7 @@ public static class DbInitializer
             new User() {
                 UserName = "manager@kpmg.com",
                 Email = "manager@kpmg.com",
-                Company = companies[0]
+                CompanyID = companies[0].ID
             },
             "password"
         );
@@ -55,7 +54,7 @@ public static class DbInitializer
             new User() {
                 UserName = "eavesdropper@pwc.com",
                 Email = "eavesdropper@pwc.com",
-                Company = companies[1]
+                CompanyID = companies[0].ID
             },
             "password"
         );
