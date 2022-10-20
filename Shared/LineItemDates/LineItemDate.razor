@@ -1,3 +1,5 @@
+@using Microsoft.EntityFrameworkCore
+
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 
 @if (isEditing)
@@ -21,6 +23,30 @@ else
                 <a class="btn btn--light" @onclick="ShowEditForm">Edit</a>
             </div>
         </div>
+
+        <div class="line-item-date__body">
+            <div class="line-item line-item--header">
+                <div class="line-item__name">Article</div>
+                <div class="line-item__quantity">Quantity</div>
+                <div class="line-item__price">Price</div>
+                <div class="line-item__actions"></div>
+            </div>
+
+            @if (lineItems != null)
+            {
+                @foreach (var lineItem in lineItems)
+                {
+                    <QuoteEditorBlazor.Shared.LineItems.LineItem
+                        LineItemToShow="lineItem"
+                    />
+                }
+            }
+
+            <div class="line-item-date__footer">
+                <a class="btn btn--primary" @onclick="ShowNewLineItemForm">Add item</a>
+            </div>
+        </div>
+
     </div>
 }
 
@@ -34,7 +60,14 @@ else
     [Parameter]
     public EventCallback OnLineItemDateDeleted { get; set; }
 
+    List<QuoteEditorBlazor.Models.LineItem> lineItems = new List<QuoteEditorBlazor.Models.LineItem>();
+
     bool isEditing = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
 
     void ShowEditForm()
     {
@@ -44,6 +77,11 @@ else
     void HideEditForm()
     {
         isEditing = false;
+    }
+
+    void ShowNewLineItemForm()
+    {
+        Console.WriteLine("Called ShowNewLineItemForm");
     }
 
     void NotifyLineItemDateUpdated()
@@ -57,5 +95,15 @@ else
         context.LineItemDates.Remove(LineItemDateToShow);
         context.SaveChanges();
         OnLineItemDateDeleted.InvokeAsync();
+    }
+
+    async Task LoadData()
+    {
+        lineItems = await context.LineItems
+            .Where(li => li.LineItemDateID == LineItemDateToShow.ID)
+            .OrderBy(li => li.ID)
+            .ToListAsync();
+
+        StateHasChanged();
     }
 }

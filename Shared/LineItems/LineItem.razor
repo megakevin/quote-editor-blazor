@@ -1,0 +1,50 @@
+<div class="line-item">
+    <div class="line-item__name">
+        @LineItemToShow.Name
+        <div class="line-item__description">
+            @* <%= simple_format line_item.description %> *@
+            @LineItemToShow.Description
+        </div>
+    </div>
+    <div class="line-item__quantity-price">
+        @LineItemToShow.Quantity
+        &times;
+        @* <%= number_to_currency line_item.unit_price %> *@
+        @LineItemToShow.UnitPrice
+    </div>
+    <div class="line-item__quantity">
+        @LineItemToShow.Quantity
+    </div>
+    <div class="line-item__price">
+        @* <%= number_to_currency line_item.unit_price %> *@
+        @LineItemToShow.UnitPrice
+    </div>
+    <div class="line-item__actions">
+        <a class="btn btn--light" @onclick="DeleteLineItem">Delete</a>
+        <a class="btn btn--light" @onclick="ShowEditForm">Edit</a>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public QuoteEditorBlazor.Models.LineItem LineItemToShow { get; set; }
+
+    bool isEditing = false;
+
+    void ShowEditForm()
+    {
+        isEditing = true;
+    }
+
+    void HideEditForm()
+    {
+        isEditing = false;
+    }
+
+    void DeleteLineItem()
+    {
+        /*context.LineItemDates.Remove(LineItemDateToShow);
+        context.SaveChanges();
+        OnLineItemDateDeleted.InvokeAsync();*/
+    }
+}
