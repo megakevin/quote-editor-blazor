@@ -33,14 +33,23 @@
             <div class="line-item__actions"></div>
         </div>
 
-        @if (LineItemDateToShow.LineItems != null)
+        @if (lineItems != null)
         {
-            @foreach (var lineItem in LineItemDateToShow.LineItems)
+            @foreach (var lineItem in lineItems)
             {
                 <QuoteEditorBlazor.Shared.LineItems.LineItem
                     LineItemToShow="lineItem"
                 />
             }
+        }
+
+        @if (shouldShowNewLineItemForm)
+        {
+            <QuoteEditorBlazor.Shared.LineItems.New
+                LineItemDate="LineItemDateToShow"
+                OnLineItemCreated="OnLineItemCreated"
+                OnCancel="HideNewLineItemForm"
+            />
         }
 
         <div class="line-item-date__footer">
@@ -60,13 +69,14 @@
     [Parameter]
     public EventCallback OnLineItemDateDeleted { get; set; }
 
-    List<QuoteEditorBlazor.Models.LineItem> lineItems = new List<QuoteEditorBlazor.Models.LineItem>();
+    ICollection<QuoteEditorBlazor.Models.LineItem> lineItems = new List<QuoteEditorBlazor.Models.LineItem>();
 
     bool isEditing = false;
+    bool shouldShowNewLineItemForm = false;
 
     protected override async Task OnInitializedAsync()
     {
-        // await LoadData();
+        lineItems = LineItemDateToShow.LineItems;
     }
 
     void ShowEditForm()
@@ -81,7 +91,12 @@
 
     void ShowNewLineItemForm()
     {
-        Console.WriteLine("Called ShowNewLineItemForm");
+        shouldShowNewLineItemForm = true;
+    }
+
+    void HideNewLineItemForm()
+    {
+        shouldShowNewLineItemForm = false;
     }
 
     void NotifyLineItemDateUpdated()
@@ -97,7 +112,16 @@
         OnLineItemDateDeleted.InvokeAsync();
     }
 
-    /*async Task LoadData()
+    async void OnLineItemCreated()
+    {
+        //flashState.AddMessage("Date was successfully created.");
+
+        HideNewLineItemForm();
+        //await NotifyQuotesChanged(); TODO: SignalR
+        await LoadData();
+    }
+
+    async Task LoadData()
     {
         lineItems = await context.LineItems
             .Where(li => li.LineItemDateID == LineItemDateToShow.ID)
@@ -105,5 +129,5 @@
             .ToListAsync();
 
         StateHasChanged();
-    }*/
+    }
 }

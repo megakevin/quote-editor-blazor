@@ -1,0 +1,45 @@
+<EditForm Model="LineItemToEdit" class="form line-item line-item--form" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="line-item__name">
+        <label class="visually-hidden" for="line_item_name">
+            Name
+        </label>
+        <InputText id="line_item_name" class="form__input" @bind-Value="LineItemToEdit.Name" />
+    </div>
+    <div class="line-item__quantity">
+        <label class="visually-hidden" for="line_item_quantity">
+            Quantity
+        </label>
+        <InputNumber id="line_item_quantity" class="form__input" @bind-Value="LineItemToEdit.Quantity" />
+    </div>
+    <div class="line-item__price">
+        <label class="visually-hidden" for="line_item_price">
+            Price
+        </label>
+        <InputNumber id="line_item_price" class="form__input" @bind-Value="LineItemToEdit.UnitPrice" />
+    </div>
+    <div class="line-item__description">
+        <label class="visually-hidden" for="line_item_description">
+            Description
+        </label>
+        <InputText id="line_item_description" class="form__input" @bind-Value="LineItemToEdit.Description" />
+    </div>
+
+    <div class="line-item__actions">
+        <a class="btn btn--light" @onclick="OnCancel">Cancel</a>
+        <button class="btn btn--secondary" type="submit">Submit</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public QuoteEditorBlazor.Models.LineItem LineItemToEdit { get; set; }
+
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+}

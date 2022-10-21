@@ -1,0 +1,29 @@
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
+<QuoteEditorBlazor.Shared.LineItems.Form
+    LineItemToEdit="lineItem"
+    OnSubmit="CreateLineItem"
+    OnCancel="OnCancel"
+/>
+
+@code {
+    [Parameter]
+    public QuoteEditorBlazor.Models.LineItemDate LineItemDate { get; set; }
+
+    [Parameter]
+    public EventCallback OnLineItemCreated { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    QuoteEditorBlazor.Models.LineItem lineItem = new QuoteEditorBlazor.Models.LineItem();
+
+    async Task CreateLineItem()
+    {
+        lineItem.LineItemDateID = LineItemDate.ID;
+
+        context.LineItems.Add(lineItem);
+        context.SaveChanges();
+        OnLineItemCreated.InvokeAsync();
+    }
+}
