@@ -1,0 +1,27 @@
+@using Microsoft.EntityFrameworkCore
+
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
+<QuoteEditorBlazor.Shared.LineItems.Form
+    LineItemToEdit="LineItemToEdit"
+    OnSubmit="UpdateLineItem"
+    OnCancel="OnCancel"
+/>
+
+@code {
+    [Parameter]
+    public QuoteEditorBlazor.Models.LineItem LineItemToEdit { get; set; }
+
+    [Parameter]
+    public EventCallback OnLineItemUpdated { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    void UpdateLineItem()
+    {
+        context.Entry(LineItemToEdit).State = EntityState.Modified;
+        context.SaveChanges();
+        OnLineItemUpdated.InvokeAsync();
+    }
+}

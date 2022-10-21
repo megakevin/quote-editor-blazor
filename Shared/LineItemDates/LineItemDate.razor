@@ -39,6 +39,7 @@
             {
                 <QuoteEditorBlazor.Shared.LineItems.LineItem
                     LineItemToShow="lineItem"
+                    OnLineItemUpdated="OnLineItemUpdated"
                 />
             }
         }
@@ -119,6 +120,11 @@
         HideNewLineItemForm();
         //await NotifyQuotesChanged(); TODO: SignalR
         await LoadData();
+    }
+
+    async void OnLineItemUpdated()
+    {
+        //await LoadData();
     }
 
     async Task LoadData()
