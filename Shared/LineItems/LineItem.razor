@@ -19,15 +19,13 @@ else
         <div class="line-item__quantity-price">
             @LineItemToShow.Quantity
             &times;
-            @* <%= number_to_currency line_item.unit_price %> *@
-            @LineItemToShow.UnitPrice
+            @string.Format("{0:C}", LineItemToShow.UnitPrice)
         </div>
         <div class="line-item__quantity">
             @LineItemToShow.Quantity
         </div>
         <div class="line-item__price">
-            @* <%= number_to_currency line_item.unit_price %> *@
-            @LineItemToShow.UnitPrice
+            @string.Format("{0:C}", LineItemToShow.UnitPrice)
         </div>
         <div class="line-item__actions">
             <a class="btn btn--light" @onclick="DeleteLineItem">Delete</a>
