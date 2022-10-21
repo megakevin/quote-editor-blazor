@@ -18,7 +18,7 @@
         <label class="visually-hidden" for="line_item_price">
             Price
         </label>
-        <InputNumber id="line_item_price" class="form__input" @bind-Value="LineItemToEdit.UnitPrice" />
+        <InputNumber id="line_item_price" class="form__input" @bind-Value="LineItemToEdit.UnitPrice" step="0.01" />
     </div>
     <div class="line-item__description">
         <label class="visually-hidden" for="line_item_description">
