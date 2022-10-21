@@ -40,6 +40,7 @@
                 <QuoteEditorBlazor.Shared.LineItems.LineItem
                     LineItemToShow="lineItem"
                     OnLineItemUpdated="OnLineItemUpdated"
+                    OnLineItemDeleted="OnLineItemDeleted"
                 />
             }
         }
@@ -125,6 +126,11 @@
     async void OnLineItemUpdated()
     {
         //await LoadData();
+    }
+
+    async void OnLineItemDeleted()
+    {
+        await LoadData();
     }
 
     async Task LoadData()

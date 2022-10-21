@@ -1,3 +1,5 @@
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+
 @if (isEditing)
 {
     <QuoteEditorBlazor.Shared.LineItems.Edit
@@ -41,6 +43,9 @@ else
     [Parameter]
     public EventCallback OnLineItemUpdated { get; set; }
 
+    [Parameter]
+    public EventCallback OnLineItemDeleted { get; set; }
+
     bool isEditing = false;
 
     void ShowEditForm()
@@ -61,8 +66,8 @@ else
 
     void DeleteLineItem()
     {
-        /*context.LineItemDates.Remove(LineItemDateToShow);
+        context.LineItems.Remove(LineItemToShow);
         context.SaveChanges();
-        OnLineItemDateDeleted.InvokeAsync();*/
+        OnLineItemDeleted.InvokeAsync();
     }
 }
