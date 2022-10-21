@@ -48,6 +48,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<QuotesHubConnectionBuilder>();
 builder.Services.AddScoped<FlashState>();
+builder.Services.AddScoped<QuoteTotalState>();
 
 var app = builder.Build();
 

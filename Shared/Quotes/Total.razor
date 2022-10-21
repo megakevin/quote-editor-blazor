@@ -1,0 +1,49 @@
+@using Microsoft.EntityFrameworkCore
+@using QuoteEditorBlazor.State
+
+@implements IDisposable
+
+@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+@inject QuoteTotalState quoteTotalState
+
+<footer class="quote-total">
+  <div class="quote-total__inner container">
+    <div>Total:</div>
+    <div>
+        @if(quote != null) { @quote.TotalPrice }
+    </div>
+  </div>
+</footer>
+
+@code {
+    [Parameter]
+    public int QuoteId { get; set; }
+
+    QuoteEditorBlazor.Models.Quote quote;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+        quoteTotalState.TotalChanged += OnTotalChanged;
+    }
+
+    public void Dispose()
+    {
+        quoteTotalState.TotalChanged -= OnTotalChanged;
+    }
+
+    void OnTotalChanged()
+    {
+        LoadData();
+    }
+
+    async Task LoadData()
+    {
+        quote = await context.Quotes
+            .Include(q => q.LineItemDates)
+            .ThenInclude(lid => lid.LineItems)
+            .FirstAsync(q => q.ID == QuoteId);
+
+        StateHasChanged();
+    }
+}

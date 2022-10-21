@@ -13,4 +13,12 @@ public class Quote
     public Company Company { get; set; }
 
     public ICollection<LineItemDate> LineItemDates { get; set; }
+
+    public decimal TotalPrice
+    {
+        get
+        {
+            return LineItemDates.SelectMany(lid => lid.LineItems).Sum(li => li.TotalPrice);
+        }
+    }
 }

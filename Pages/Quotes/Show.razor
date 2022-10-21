@@ -6,7 +6,7 @@
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 @inject FlashState flashState
 
-<main class="container">
+<main class="container mb-xxxxl">
     <a href="/quotes">&larr; Back to quotes</a>
     <div class="header">
         <h1>
@@ -37,6 +37,10 @@
         }
     }
 </main>
+
+<QuoteEditorBlazor.Shared.Quotes.Total
+    QuoteId="QuoteId"
+/>
 
 @code {
     [Parameter]

@@ -19,4 +19,12 @@ public class LineItem
     public int LineItemDateID { get; set; }
 
     public LineItemDate LineItemDate { get; set; }
+
+    public decimal TotalPrice
+    {
+        get
+        {
+            return Quantity * UnitPrice;
+        }
+    }
 }
