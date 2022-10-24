@@ -18,10 +18,13 @@
 
     QuoteEditorBlazor.Models.LineItemDate lineItemDate = new QuoteEditorBlazor.Models.LineItemDate();
 
-    async Task CreateLineItemDate()
+    protected override void OnParametersSet()
     {
         lineItemDate.QuoteID = QuoteToEdit.ID;
+    }
 
+    async Task CreateLineItemDate()
+    {
         context.LineItemDates.Add(lineItemDate);
         context.SaveChanges();
         OnLineItemDateCreated.InvokeAsync();

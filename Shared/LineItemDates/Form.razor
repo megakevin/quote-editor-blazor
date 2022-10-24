@@ -1,5 +1,6 @@
 <EditForm Model="LineItemDateToEdit" class="form line-item-date" OnValidSubmit="OnSubmit">
     <DataAnnotationsValidator />
+    <LineItemDateUniquenessValidator LineItemDate="LineItemDateToEdit" />
     <ValidationSummary />
 
     <div class="form__group">
