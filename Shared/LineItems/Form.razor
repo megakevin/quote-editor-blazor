@@ -29,7 +29,7 @@
 
     <div class="line-item__actions">
         <a class="btn btn--light" @onclick="OnCancel">Cancel</a>
-        <button class="btn btn--secondary" type="submit">Submit</button>
+        <button class="btn btn--secondary" type="submit">@SubmitText</button>
     </div>
 </EditForm>
 
@@ -42,4 +42,7 @@
 
     [Parameter]
     public EventCallback OnCancel { get; set; }
+
+    [Parameter]
+    public string SubmitText { get; set; }
 }

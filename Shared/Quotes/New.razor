@@ -2,7 +2,12 @@
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 
-<QuoteEditorBlazor.Shared.Quotes.Form QuoteToEdit="quote" OnSubmit="CreateQuote" OnCancel="OnCancel" />
+<QuoteEditorBlazor.Shared.Quotes.Form
+    QuoteToEdit="quote"
+    OnSubmit="CreateQuote"
+    OnCancel="OnCancel"
+    SubmitText="Create"
+/>
 
 @code {
     [CascadingParameter]

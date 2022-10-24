@@ -10,7 +10,7 @@
     </div>
 
     <a class="btn btn--light" @onclick="OnCancel">Cancel</a>
-    <button class="btn btn--secondary" type="submit">Submit</button>
+    <button class="btn btn--secondary" type="submit">@SubmitText</button>
 </EditForm>
 
 @code {
@@ -22,6 +22,9 @@
 
     [Parameter]
     public EventCallback OnCancel { get; set; }
+
+    [Parameter]
+    public string SubmitText { get; set; }
 
     private void HandleValidSubmit()
     {
