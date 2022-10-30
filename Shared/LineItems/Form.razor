@@ -6,25 +6,25 @@
         <label class="visually-hidden" for="line_item_name">
             Name
         </label>
-        <InputText id="line_item_name" class="form__input" @bind-Value="LineItemToEdit.Name" />
+        <InputText id="line_item_name" class="form__input" @bind-Value="LineItemToEdit.Name" placeholder="Name of your item" />
     </div>
     <div class="line-item__quantity">
         <label class="visually-hidden" for="line_item_quantity">
             Quantity
         </label>
-        <InputNumber id="line_item_quantity" class="form__input" @bind-Value="LineItemToEdit.Quantity" />
+        <InputNumber id="line_item_quantity" class="form__input" @bind-Value="LineItemToEdit.Quantity" placeholder="1" />
     </div>
     <div class="line-item__price">
         <label class="visually-hidden" for="line_item_price">
             Price
         </label>
-        <InputNumber id="line_item_price" class="form__input" @bind-Value="LineItemToEdit.UnitPrice" step="0.01" />
+        <InputNumber id="line_item_price" class="form__input" @bind-Value="LineItemToEdit.UnitPrice" step="0.01" placeholder="$100.00" />
     </div>
     <div class="line-item__description">
         <label class="visually-hidden" for="line_item_description">
             Description
         </label>
-        <InputText id="line_item_description" class="form__input" @bind-Value="LineItemToEdit.Description" />
+        <InputText id="line_item_description" class="form__input" @bind-Value="LineItemToEdit.Description" placeholder="Description (optional)" />
     </div>
 
     <div class="line-item__actions">
