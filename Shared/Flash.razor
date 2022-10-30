@@ -1,11 +1,11 @@
-@using QuoteEditorBlazor.State
+@using QuoteEditorBlazor.Store
 
-@inject FlashState flashState
+@inject FlashStore flashStore
 
 @implements IDisposable
 
 <div class="flash">
-    @foreach (var message in flashState.Messages)
+    @foreach (var message in flashStore.Messages)
     {
         <div class="flash__message">
             @message
@@ -16,11 +16,11 @@
 @code {
     protected override void OnInitialized()
     {
-        flashState.MessagesChanged += StateHasChanged;
+        flashStore.MessagesChanged += StateHasChanged;
     }
 
     public void Dispose()
     {
-        flashState.MessagesChanged -= StateHasChanged;
+        flashStore.MessagesChanged -= StateHasChanged;
     }
 }

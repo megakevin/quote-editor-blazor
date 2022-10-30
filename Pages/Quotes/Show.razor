@@ -1,10 +1,10 @@
 @page "/quotes/{quoteId:int}"
 
 @using Microsoft.EntityFrameworkCore
-@using QuoteEditorBlazor.State
+@using QuoteEditorBlazor.Store
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
-@inject FlashState flashState
+@inject FlashStore flashStore
 
 <main class="container mb-xxxxl">
     <a href="/quotes">&larr; Back to quotes</a>
@@ -68,7 +68,7 @@
 
     async void OnLineItemDateCreated()
     {
-        flashState.AddMessage("Date was successfully created.");
+        flashStore.AddMessage("Date was successfully created.");
 
         HideForm();
         //await NotifyQuotesChanged(); TODO: SignalR
@@ -77,14 +77,14 @@
 
     async void OnLineItemDateUpdated()
     {
-        flashState.AddMessage("Date was successfully updated.");
+        flashStore.AddMessage("Date was successfully updated.");
         // await NotifyQuotesChanged(); TODO: SignalR
         await LoadData();
     }
 
     async void OnLineItemDateDeleted()
     {
-        flashState.AddMessage("Date was successfully destroyed.");
+        flashStore.AddMessage("Date was successfully destroyed.");
         // await NotifyQuotesChanged(); TODO: SignalR
         await LoadData();
     }

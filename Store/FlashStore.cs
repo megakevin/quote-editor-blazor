@@ -1,6 +1,6 @@
-namespace QuoteEditorBlazor.State;
+namespace QuoteEditorBlazor.Store;
 
-public class FlashState
+public class FlashStore
 {
     public List<string> Messages { get; private set; } = new List<string>();
 

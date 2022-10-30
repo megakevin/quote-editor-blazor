@@ -1,6 +1,6 @@
-namespace QuoteEditorBlazor.State;
+namespace QuoteEditorBlazor.Store;
 
-public class QuoteTotalState
+public class QuoteTotalStore
 {
     public event Action? TotalChanged;
 

@@ -6,11 +6,11 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @using QuoteEditorBlazor.Areas.Identity.Claims
 @using QuoteEditorBlazor.Hubs
-@using QuoteEditorBlazor.State
+@using QuoteEditorBlazor.Store
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
 @inject QuotesHubConnectionBuilder quotesHubConnectionBuilder
-@inject FlashState flashState
+@inject FlashStore flashStore
 
 @implements IAsyncDisposable
 
@@ -110,7 +110,7 @@
 
     async void OnQuoteCreated()
     {
-        flashState.AddMessage("Quote was successfully created.");
+        flashStore.AddMessage("Quote was successfully created.");
 
         HideNewQuoteForm();
         await NotifyQuotesChanged();
@@ -119,14 +119,14 @@
 
     async void OnQuoteUpdated()
     {
-        flashState.AddMessage("Quote was successfully updated.");
+        flashStore.AddMessage("Quote was successfully updated.");
 
         await NotifyQuotesChanged();
     }
 
     async void OnQuoteDeleted()
     {
-        flashState.AddMessage("Quote was successfully destroyed.");
+        flashStore.AddMessage("Quote was successfully destroyed.");
 
         await NotifyQuotesChanged();
         await LoadQuotes();

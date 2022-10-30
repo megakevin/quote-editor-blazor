@@ -1,10 +1,10 @@
 @using Microsoft.EntityFrameworkCore
-@using QuoteEditorBlazor.State
+@using QuoteEditorBlazor.Store
 
 @implements IDisposable
 
 @inject QuoteEditorBlazor.Data.QuoteEditorContext context
-@inject QuoteTotalState quoteTotalState
+@inject QuoteTotalStore quoteTotalStore
 
 <footer class="quote-total">
   <div class="quote-total__inner container">
@@ -24,12 +24,12 @@
     protected override async Task OnInitializedAsync()
     {
         await LoadData();
-        quoteTotalState.TotalChanged += OnTotalChanged;
+        quoteTotalStore.TotalChanged += OnTotalChanged;
     }
 
     public void Dispose()
     {
-        quoteTotalState.TotalChanged -= OnTotalChanged;
+        quoteTotalStore.TotalChanged -= OnTotalChanged;
     }
 
     void OnTotalChanged()
