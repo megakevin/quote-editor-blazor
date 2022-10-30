@@ -30,6 +30,7 @@
         @foreach (var lineItemDate in lineItemDates)
         {
             <QuoteEditorBlazor.Shared.LineItemDates.LineItemDate
+                @key="lineItemDate.ID"
                 LineItemDateToShow="lineItemDate"
                 OnLineItemDateUpdated="OnLineItemDateUpdated"
                 OnLineItemDateDeleted="OnLineItemDateDeleted"

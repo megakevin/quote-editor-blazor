@@ -41,6 +41,7 @@
             @foreach (var lineItem in lineItems)
             {
                 <QuoteEditorBlazor.Shared.LineItems.LineItem
+                    @key="lineItem.ID"
                     LineItemToShow="lineItem"
                     OnLineItemUpdated="OnLineItemUpdated"
                     OnLineItemDeleted="OnLineItemDeleted"
@@ -81,7 +82,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        lineItems = LineItemDateToShow.LineItems;
+        await LoadData();
+        //lineItems = LineItemDateToShow.LineItems;
     }
 
     void ShowEditForm()
