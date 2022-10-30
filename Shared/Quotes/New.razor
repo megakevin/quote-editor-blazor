@@ -1,6 +1,7 @@
+@using Microsoft.EntityFrameworkCore
 @using QuoteEditorBlazor.Areas.Identity.Claims
 
-@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+@inject IDbContextFactory<QuoteEditorBlazor.Data.QuoteEditorContext> dbContextFactory
 
 <QuoteEditorBlazor.Shared.Quotes.Form
     QuoteToEdit="quote"
@@ -27,9 +28,9 @@
         if (!authState.User.Identity.IsAuthenticated) return;
 
         var currentCompanyId = authState.User.GetCompanyID();
-
         quote.CompanyID = int.Parse(currentCompanyId);
 
+        using var context = dbContextFactory.CreateDbContext();
         context.Quotes.Add(quote);
         context.SaveChanges();
         OnQuoteCreated.InvokeAsync();

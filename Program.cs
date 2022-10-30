@@ -7,7 +7,7 @@ using QuoteEditorBlazor.Data;
 using Microsoft.AspNetCore.Identity;
 using QuoteEditorBlazor.Areas.Identity.Claims;
 using QuoteEditorBlazor.Models;
-using QuoteEditorBlazor.State;
+using QuoteEditorBlazor.Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,14 +15,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddDbContext<QuoteEditorContext>(options => {
+builder.Services.AddDbContextFactory<QuoteEditorContext>(options => {
     options
         .UseNpgsql(builder.Configuration.GetConnectionString("QuoteEditorContext"))
         .UseSnakeCaseNamingConvention()
         .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
         .EnableSensitiveDataLogging();
-    },
-    ServiceLifetime.Transient
+    }
 );
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -47,8 +46,8 @@ builder.Services.AddResponseCompression(opts =>
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<QuotesHubConnectionBuilder>();
-builder.Services.AddScoped<FlashState>();
-builder.Services.AddScoped<QuoteTotalState>();
+builder.Services.AddScoped<FlashStore>();
+builder.Services.AddScoped<QuoteTotalStore>();
 
 var app = builder.Build();
 

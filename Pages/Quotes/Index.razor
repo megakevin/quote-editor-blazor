@@ -8,7 +8,7 @@
 @using QuoteEditorBlazor.Hubs
 @using QuoteEditorBlazor.Store
 
-@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+@inject IDbContextFactory<QuoteEditorBlazor.Data.QuoteEditorContext> dbContextFactory
 @inject QuotesHubConnectionBuilder quotesHubConnectionBuilder
 @inject FlashStore flashStore
 
@@ -89,6 +89,7 @@
         var authState = await authenticationStateTask;
         if (!authState.User.Identity.IsAuthenticated) return;
 
+        using var context = dbContextFactory.CreateDbContext();
         var currentCompanyId = authState.User.GetCompanyID();
         quotes = await context.Quotes
             .Where(q => q.CompanyID == int.Parse(currentCompanyId))

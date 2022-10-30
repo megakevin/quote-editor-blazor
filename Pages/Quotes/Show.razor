@@ -3,7 +3,7 @@
 @using Microsoft.EntityFrameworkCore
 @using QuoteEditorBlazor.Store
 
-@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+@inject IDbContextFactory<QuoteEditorBlazor.Data.QuoteEditorContext> dbContextFactory
 @inject FlashStore flashStore
 
 <main class="container mb-xxxxl">
@@ -91,6 +91,7 @@
 
     async Task LoadData()
     {
+        using var context = dbContextFactory.CreateDbContext();
         quote = await context.Quotes.FirstAsync(q => q.ID == QuoteId);
 
         lineItemDates = await context.LineItemDates

@@ -3,7 +3,7 @@
 @using Microsoft.EntityFrameworkCore
 @using QuoteEditorBlazor.Areas.Identity.Claims
 
-@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+@inject IDbContextFactory<QuoteEditorBlazor.Data.QuoteEditorContext> dbContextFactory
 
 <header class="navbar">
   <AuthorizeView>
@@ -34,6 +34,7 @@
         var authState = await authenticationStateTask;
         if (!authState.User.Identity.IsAuthenticated) return;
 
+        using var context = dbContextFactory.CreateDbContext();
         var currentCompanyId = authState.User.GetCompanyID();
         var company = await context.Companies.FindAsync(int.Parse(currentCompanyId));
 

@@ -1,4 +1,6 @@
-@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+@using Microsoft.EntityFrameworkCore
+
+@inject IDbContextFactory<QuoteEditorBlazor.Data.QuoteEditorContext> dbContextFactory
 
 @if (isEditing)
 {
@@ -49,6 +51,7 @@ else
 
     void DeleteQuote()
     {
+        using var context = dbContextFactory.CreateDbContext();
         context.Quotes.Remove(QuoteToShow);
         context.SaveChanges();
         OnQuoteDeleted.InvokeAsync();

@@ -3,7 +3,7 @@
 
 @implements IDisposable
 
-@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+@inject IDbContextFactory<QuoteEditorBlazor.Data.QuoteEditorContext> dbContextFactory
 @inject QuoteTotalStore quoteTotalStore
 
 <footer class="quote-total">
@@ -39,6 +39,7 @@
 
     async Task LoadData()
     {
+        using var context = dbContextFactory.CreateDbContext();
         quote = await context.Quotes
             .Include(q => q.LineItemDates)
             .ThenInclude(lid => lid.LineItems)

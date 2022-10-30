@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore;
 using QuoteEditorBlazor.Data;
 using QuoteEditorBlazor.Models;
 
@@ -14,7 +15,7 @@ namespace QuoteEditorBlazor
         public LineItemDate LineItemDate { get; set; }
 
         [Inject]
-        public QuoteEditorContext Context { get; set; }
+        public IDbContextFactory<QuoteEditorContext> DbContextFactory { get; set; }
 
         public FieldIdentifier DateFieldId
         {
@@ -64,7 +65,8 @@ namespace QuoteEditorBlazor
 
         private bool DoesDateAlreadyExists()
         {
-            var match = Context.LineItemDates.FirstOrDefault(
+            using var context = DbContextFactory.CreateDbContext();
+            var match = context.LineItemDates.FirstOrDefault(
                 lid => lid.Date == LineItemDate.Date && lid.QuoteID == LineItemDate.QuoteID
             );
 

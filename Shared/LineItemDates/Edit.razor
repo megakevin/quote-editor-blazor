@@ -1,6 +1,6 @@
 @using Microsoft.EntityFrameworkCore
 
-@inject QuoteEditorBlazor.Data.QuoteEditorContext context
+@inject IDbContextFactory<QuoteEditorBlazor.Data.QuoteEditorContext> dbContextFactory
 
 <QuoteEditorBlazor.Shared.LineItemDates.Form
     LineItemDateToEdit="LineItemDateToEdit"
@@ -21,6 +21,7 @@
 
     void UpdateLineItemDate()
     {
+        using var context = dbContextFactory.CreateDbContext();
         context.Entry(LineItemDateToEdit).State = EntityState.Modified;
         context.SaveChanges();
         OnLineItemDateUpdated.InvokeAsync();
