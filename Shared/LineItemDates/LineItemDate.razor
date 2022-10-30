@@ -116,6 +116,7 @@
         context.LineItemDates.Remove(LineItemDateToShow);
         context.SaveChanges();
         OnLineItemDateDeleted.InvokeAsync();
+        quoteTotalStore.NotifyTotalChanged();
     }
 
     async void OnLineItemCreated()
