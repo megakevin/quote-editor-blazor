@@ -1,9 +1,9 @@
 @using Microsoft.EntityFrameworkCore
-@using QuoteEditorBlazor.Store
+@using QuoteEditorBlazor.AppState
 
 @inject IDbContextFactory<QuoteEditorBlazor.Data.QuoteEditorContext> dbContextFactory
 @inject FlashStore flashStore
-@inject QuoteTotalStore quoteTotalStore
+@inject QuoteTotalEventBus quoteTotalEventBus
 
 <div class="line-item-date">
     @if (isEditing)
@@ -118,13 +118,13 @@
         context.LineItemDates.Remove(LineItemDateToShow);
         context.SaveChanges();
         OnLineItemDateDeleted.InvokeAsync();
-        quoteTotalStore.NotifyTotalChanged();
+        quoteTotalEventBus.NotifyTotalChanged();
     }
 
     async void OnLineItemCreated()
     {
         flashStore.AddMessage("Line item was successfully created.");
-        quoteTotalStore.NotifyTotalChanged();
+        quoteTotalEventBus.NotifyTotalChanged();
 
         HideNewLineItemForm();
         //await NotifyQuotesChanged(); TODO: SignalR
@@ -134,13 +134,13 @@
     async void OnLineItemUpdated()
     {
         flashStore.AddMessage("Line item was successfully updated.");
-        quoteTotalStore.NotifyTotalChanged();
+        quoteTotalEventBus.NotifyTotalChanged();
     }
 
     async void OnLineItemDeleted()
     {
         flashStore.AddMessage("Line item was successfully destroyed.");
-        quoteTotalStore.NotifyTotalChanged();
+        quoteTotalEventBus.NotifyTotalChanged();
         await LoadData();
     }
 

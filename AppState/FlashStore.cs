@@ -1,4 +1,4 @@
-namespace QuoteEditorBlazor.Store;
+namespace QuoteEditorBlazor.AppState;
 
 public class FlashStore
 {
